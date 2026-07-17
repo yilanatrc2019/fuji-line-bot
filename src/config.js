@@ -54,27 +54,38 @@ export const BUSINESS_HOURS = {
  */
 export const REMINDER = {
   time: '09:00', // 每天幾點推待辦清單給同仁（台北時間）。設成 null 就完全不推。
-  staffGroupId: process.env.STAFF_GROUP_ID || '', // 空的就不推，機器人其他功能照常
+  staffGroupId: env('STAFF_GROUP_ID'), // 空的就不推，機器人其他功能照常
 };
 
 /** 同仁在群組打這些字，機器人會回覆目前的待辦清單（免費）。 */
 export const STAFF_QUERY_KEYWORDS = ['待辦', '待办', '清單', '未回覆', '有誰沒回'];
 
+/**
+ * 讀環境變數並去掉前後空白。
+ *
+ * 從網頁複製 token 再貼進部署平台時，很容易夾帶一個看不見的空白或換行。
+ * 不清掉的話，LINE 會回「Authentication failed」這種完全看不出原因的錯誤，
+ * 或是待辦頁面明明貼對通行碼卻一直 403。這個坑很難自己找出來。
+ */
+function env(key, fallback = '') {
+  return (process.env[key] || fallback).trim();
+}
+
 export const LINE = {
-  channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
-  channelSecret: process.env.LINE_CHANNEL_SECRET,
+  channelAccessToken: env('LINE_CHANNEL_ACCESS_TOKEN'),
+  channelSecret: env('LINE_CHANNEL_SECRET'),
 };
 
-export const PORT = process.env.PORT || 3000;
+export const PORT = env('PORT') || 3000;
 
 /**
  * 機器人對外的網址，例如 https://xxx.onrender.com
  * 圖片訊息要用它組出圖片的公開網址，LINE 只吃 HTTPS。
  */
-export const PUBLIC_BASE_URL = (process.env.PUBLIC_BASE_URL || '').replace(/\/$/, '');
+export const PUBLIC_BASE_URL = env('PUBLIC_BASE_URL').replace(/\/+$/, '');
 
 /** 待辦頁面的通行碼。同仁開 /admin?token=xxx 才看得到。 */
-export const ADMIN_TOKEN = process.env.ADMIN_TOKEN || '';
+export const ADMIN_TOKEN = env('ADMIN_TOKEN');
 
 /** 關鍵字比對分數低於此值就當作沒聽懂，走 fallback。 */
 export const MATCH_THRESHOLD = 2;

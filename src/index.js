@@ -1,5 +1,5 @@
 import express from 'express';
-import { middleware, messagingApi } from '@line/bot-sdk';
+import { middleware, messagingApi, SignatureValidationFailed } from '@line/bot-sdk';
 import { fileURLToPath } from 'node:url';
 
 import { LINE, PORT, PUBLIC_BASE_URL, ADMIN_TOKEN, assertConfig } from './config.js';
@@ -29,6 +29,20 @@ app.post('/webhook', middleware({ channelSecret: LINE.channelSecret }), async (r
   for (const event of events) {
     await handleEvent(event);
   }
+});
+
+/**
+ * 簽章驗證失敗時的處理。
+ *
+ * 沒接住的話 Express 會回 500，看起來像機器人壞了，其實是有人拿假請求來試。
+ * 回 401 才是正確的意思：我知道你是誰在敲門，但你證明不了身分。
+ */
+app.use('/webhook', (err, req, res, next) => {
+  if (err instanceof SignatureValidationFailed) {
+    console.warn('[webhook] 簽章驗證失敗，已拒絕。來源：', req.ip);
+    return res.status(401).send('Invalid signature');
+  }
+  next(err);
 });
 
 app.use(express.urlencoded({ extended: false }));

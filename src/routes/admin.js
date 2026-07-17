@@ -14,10 +14,13 @@ import { getEntry } from '../lib/matcher.js';
 const router = express.Router();
 
 function checkToken(req, res, next) {
-  const token = req.query.token || req.body?.token;
+  // 前後空白清掉：從 LINE 訊息點連結進來時，有些輸入法會夾帶空白。
+  const token = (req.query.token || req.body?.token || '').trim();
+
   if (!ADMIN_TOKEN || token !== ADMIN_TOKEN) {
     return res.status(403).type('html').send(page('無法存取', `
       <div class="empty">
+        <p class="big">🔒 無法存取</p>
         <p>連結不正確或已失效。</p>
         <p class="hint">請向管理者索取正確的待辦清單連結。</p>
       </div>
@@ -137,7 +140,7 @@ function page(title, body) {
 </style>
 </head>
 <body>
-  <h1>待辦留言</h1>
+  <h1>${escapeHtml(title)}</h1>
   <p class="sub">${escapeHtml(CENTER.name)}</p>
   ${body}
 </body>
