@@ -1,0 +1,22 @@
+{
+  "name": "assistive-device-line-bot",
+  "version": "1.0.0",
+  "description": "宜蘭縣溪北輔具資源中心 LINE 自動回覆機器人",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "richmenu:deploy": "node scripts/richmenu.js deploy",
+    "richmenu:clear": "node scripts/richmenu.js clear",
+    "check": "node scripts/check-faq.js"
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^9.5.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

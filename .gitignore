@@ -1,0 +1,11 @@
+node_modules/
+
+# 金鑰，絕對不要上傳
+.env
+
+# 民眾的留言紀錄，含個資，不要上傳
+data/tickets.json
+data/tickets.json.tmp
+
+# 參考用截圖，不需要上傳
+S__43622405.jpg
