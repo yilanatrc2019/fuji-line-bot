@@ -137,7 +137,7 @@
       "messages": [
         {
           "type": "text",
-          "text": "輔具的品項與適用補助，建議由評估人員依您的實際需求協助判斷，比較不會買錯或申請錯。\n\n📋 想先看看中心目前有沒有現貨，可以點這裡看庫存表：\nhttps://docs.google.com/spreadsheets/d/1hJhuNCFOgyVtFWpysLUAZySN9cKSrW0LqvEOFnDjiDQ/edit?usp=sharing\n\n⚠️ 庫存每天都會異動，隨時可能被借出，請以現場為準。建議您先來電或來訊跟我們確認最新狀況：\n📞 {{phone}}\n🕐 {{hours}}"
+          "text": "輔具將由評估人員依使用者身體狀況評估後協助判斷適切輔具。\n\n📋 想先看看中心目前有沒有現貨，可以點這裡看庫存表：\nhttps://docs.google.com/spreadsheets/d/1hJhuNCFOgyVtFWpysLUAZySN9cKSrW0LqvEOFnDjiDQ/edit?usp=sharing\n\n⚠️ 庫存每天都會異動，隨時可能被借出，請以現場為準。建議您先來電或來訊跟我們確認最新狀況：\n📞 {{phone}}\n🕐 {{hours}}"
         }
       ],
       "suggest": ["assessment", "borrow", "apply-flow"],
