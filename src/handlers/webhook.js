@@ -121,6 +121,14 @@ async function onText(client, event) {
   const open = isOpen();
   const result = match(text);
 
+  // ★ 新增：服務時間內，如果完全沒比對到任何 FAQ，就不主動回覆、也不記待辦，
+  // 讓同仁自己手動處理民眾當下的訊息，機器人不要跳出來插話。
+  // 非服務時間維持原本的行為（照樣回「現在沒人在」+ 看不懂，並記入待辦）。
+  if (open && !result) {
+    console.log('[webhook] 服務時間內未比對到 FAQ，不主動回覆。');
+    return;
+  }
+
   const messages = result ? buildMessages(result.entry) : fallback(open);
 
   // 非服務時間：先講一句「現在沒人在」，再給答案。
